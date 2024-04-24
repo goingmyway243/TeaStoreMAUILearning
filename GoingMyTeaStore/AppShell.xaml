@@ -4,12 +4,34 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:GoingMyTeaStore"
+    xmlns:pages="clr-namespace:GoingMyTeaStore.Pages"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="#18565F"
+    Shell.TabBarTitleColor="White"
+    Shell.TabBarForegroundColor="White"
+    Shell.TabBarUnselectedColor="FloralWhite"
     Title="GoingMyTeaStore">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="Home"
+             Icon="home">
+            <ShellContent ContentTemplate="{DataTemplate pages:HomePage}" />
+        </Tab>
+
+        <Tab Title="Cart"
+             Icon="cart">
+            <ShellContent ContentTemplate="{DataTemplate pages:CartPage}" />
+        </Tab>
+
+        <Tab Title="Cart"
+             Icon="heart">
+            <ShellContent ContentTemplate="{DataTemplate pages:FavoritePage}" />
+        </Tab>
+
+        <Tab Title="Profile"
+             Icon="profile">
+            <ShellContent ContentTemplate="{DataTemplate pages:ProfilePage}" />
+        </Tab>
+    </TabBar>
 
 </Shell>

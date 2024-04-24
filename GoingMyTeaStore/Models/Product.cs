@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GoingMyTeaStore.Services;
+using Newtonsoft.Json;
 
 namespace GoingMyTeaStore.Models
 {
@@ -15,5 +16,7 @@ namespace GoingMyTeaStore.Models
 
         [JsonProperty("imageUrl")]
         public string ImageUrl { get; set; }
+
+        public string FullPathImageUrl => AppSettings.ApiUrl + ImageUrl;
     }
 }

@@ -89,7 +89,7 @@ namespace GoingMyTeaStore.Services
             return JsonConvert.DeserializeObject<List<Category>>(response);
         }
 
-        public static async Task<List<Product>> GetProducts(string productType, int categoryId)
+        public static async Task<List<Product>> GetProducts(string productType, string categoryId)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
