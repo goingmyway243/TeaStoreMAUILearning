@@ -85,8 +85,15 @@ namespace GoingMyTeaStore.Services
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
-            var response = await httpClient.GetStringAsync(AppSettings.ApiUrl + "api/categories");
-            return JsonConvert.DeserializeObject<List<Category>>(response);
+            var response = await httpClient.GetAsync(AppSettings.ApiUrl + "api/categories");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var strContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Category>>(strContent);
+            }
+
+            return new List<Category>();
         }
 
         public static async Task<List<Product>> GetProducts(string productType, string categoryId)
@@ -94,8 +101,15 @@ namespace GoingMyTeaStore.Services
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
-            var response = await httpClient.GetStringAsync(AppSettings.ApiUrl + $"api/products/productType={productType}&categoryId={categoryId}");
-            return JsonConvert.DeserializeObject<List<Product>>(response);
+            var response = await httpClient.GetAsync(AppSettings.ApiUrl + $"api/products/productType={productType}&categoryId={categoryId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var strContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Product>>(strContent);
+            }
+
+            return new List<Product>();
         }
 
         public static async Task<ProductDetail> GetProductDetail(int productId)

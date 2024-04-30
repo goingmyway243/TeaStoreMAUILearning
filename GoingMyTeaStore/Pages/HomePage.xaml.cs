@@ -20,6 +20,7 @@ public partial class HomePage : ContentPage
     private async void GetTrending()
     {
         var result = await ApiService.GetProducts("trending", string.Empty);
+
         CvCategories.ItemsSource = result;
     }
 
@@ -41,6 +42,26 @@ public partial class HomePage : ContentPage
         if (currentSelect != null)
         {
             Navigation.PushAsync(new ProductListPage(currentSelect.Id));
+            ((CollectionView)sender).SelectedItem = null;
+        }
+    }
+
+    private void CvBestSelling_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var currentSelect = e.CurrentSelection.FirstOrDefault() as Product;
+        if (currentSelect != null)
+        {
+            Navigation.PushAsync(new ProductDetailPage(currentSelect.Id));
+            ((CollectionView)sender).SelectedItem = null;
+        }
+    }
+
+    private void CvTrending_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var currentSelect = e.CurrentSelection.FirstOrDefault() as Product;
+        if (currentSelect != null)
+        {
+            Navigation.PushAsync(new ProductDetailPage(currentSelect.Id));
             ((CollectionView)sender).SelectedItem = null;
         }
     }
