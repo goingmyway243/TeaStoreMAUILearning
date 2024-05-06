@@ -21,6 +21,7 @@
                      BackgroundColor="White"
                      HorizontalOptions="End"
                      VerticalOptions="Start"
+                     Clicked="ImgBtnFavorite_Clicked"
                      x:Name="ImgBtnFavorite"/>
 
         <HorizontalStackLayout Spacing="20"

@@ -18,5 +18,7 @@ namespace GoingMyTeaStore.Models
 
         [JsonProperty("imageUrl")]
         public string ImageUrl { get; set; }
+
+        public string FullPathImageUrl => AppSettings.ApiUrl + ImageUrl;
     }
 }

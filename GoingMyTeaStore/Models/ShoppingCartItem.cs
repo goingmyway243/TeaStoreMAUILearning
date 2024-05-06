@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GoingMyTeaStore.Models
 {
-    public class ShoppingCartItem
+    public class ShoppingCartItem : INotifyPropertyChanged
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -14,7 +16,22 @@ namespace GoingMyTeaStore.Models
         public int TotalAmount { get; set; }
 
         [JsonProperty("qty")]
-        public int Qty { get; set; }
+
+        private int qty;
+
+        public int Qty
+        {
+            get { return qty; }
+            set
+            {
+                if (qty != value)
+                {
+                    qty = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
 
         [JsonProperty("productId")]
         public int ProductId { get; set; }
@@ -24,5 +41,14 @@ namespace GoingMyTeaStore.Models
 
         [JsonProperty("imageUrl")]
         public string ImageUrl { get; set; }
+
+        public string FullPathImageUrl => AppSettings.ApiUrl + ImageUrl;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

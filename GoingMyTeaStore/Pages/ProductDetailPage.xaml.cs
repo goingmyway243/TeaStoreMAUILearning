@@ -7,6 +7,8 @@ namespace GoingMyTeaStore.Pages;
 public partial class ProductDetailPage : ContentPage
 {
     private int _productId;
+    private string _imageUrl;
+    private BookmarkItemService _bookmarkItemService = new BookmarkItemService();
 
     public ProductDetailPage(int productId)
     {
@@ -17,6 +19,12 @@ public partial class ProductDetailPage : ContentPage
         GetProductDetail();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UpdateFavoriteButton();
+    }
+
     private async void GetProductDetail()
     {
         var result = await ApiService.GetProductDetail(_productId);
@@ -24,8 +32,10 @@ public partial class ProductDetailPage : ContentPage
         {
             LblProductName.Text = result.Name;
             LblProductDescription.Text = result.Detail;
-            LblProductPrice.Text = result.Price.ToString();
-            LblTotalPrice.Text = result.Price.ToString();
+            LblProductPrice.Text = result.Price.ToString("0:C0");
+            LblTotalPrice.Text = result.Price.ToString("0:C0");
+            ImgProduct.Source = result.FullPathImageUrl;
+            _imageUrl = result.FullPathImageUrl;
         }
     }
 
@@ -56,7 +66,7 @@ public partial class ProductDetailPage : ContentPage
     {
         var shoppingCart = new ShoppingCart()
         {
-            CustomerId = Convert.ToInt32(Preferences.Get("userid", string.Empty)),
+            CustomerId = Preferences.Get("userid", 0),
             ProductId = _productId,
             TotalAmount = Convert.ToInt32(LblTotalPrice.Text),
             Qty = Convert.ToInt32(LblQty.Text),
@@ -72,5 +82,34 @@ public partial class ProductDetailPage : ContentPage
         {
             await DisplayAlert(string.Empty, "Oops, something when wrong...", "Try again");
         }
+    }
+
+    private void ImgBtnFavorite_Clicked(object sender, EventArgs e)
+    {
+        var existingBookmark = _bookmarkItemService.GetById(_productId);
+        if(existingBookmark != null)
+        {
+            _bookmarkItemService.Delete(existingBookmark);
+        }
+        else
+        {
+            _bookmarkItemService.Insert(new BookmarkedProduct()
+            {
+                ProductId = _productId,
+                IsBookmarked = true,
+                Detail = LblProductDescription.Text,
+                Name = LblProductName.Text,
+                Price = Convert.ToInt32(LblProductPrice.Text),
+                ImageUrl = _imageUrl
+            });
+        }
+
+        UpdateFavoriteButton();
+    }
+
+    private void UpdateFavoriteButton()
+    {
+        var existingBookmark = _bookmarkItemService.GetById(_productId);
+        ImgBtnFavorite.Source = existingBookmark != null ? "heartfill" : "heart";
     }
 }

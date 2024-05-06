@@ -109,7 +109,7 @@
                                    Text="{Binding Name}"/>
 
                             <!-- Product Price -->
-                            <Label Grid.Row="2" Text="{Binding Price}" />
+                            <Label Grid.Row="2" Text="{Binding Price, StringFormat='{0:C}'}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
