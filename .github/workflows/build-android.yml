@@ -24,4 +24,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore -c Release -f net8.0-android -p:AndroidSigningKeyStore=goingmyteastore.keystore -p:AndroidSigningKeyAlias=goingmyteastore -p:AndroidSigningKeyPass=123456 -p:AndroidSigningStorePass=123456
+        run: dotnet build --no-restore -c Release -f net8.0-android -p:AndroidPackageFormats=apk -p:AndroidSigningKeyStore=goingmyteastore.keystore -p:AndroidSigningKeyAlias=goingmyteastore -p:AndroidSigningKeyPass=123456 -p:AndroidSigningStorePass=123456
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          path: ./**/*.apk
