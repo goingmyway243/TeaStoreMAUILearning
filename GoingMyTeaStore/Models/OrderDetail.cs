@@ -21,5 +21,7 @@ namespace GoingMyTeaStore.Models
 
         [JsonProperty("productPrice")]
         public int ProductPrice { get; set; }
+
+        public string FullPathImageUrl => AppSettings.ApiUrl + ProductImage;
     }
 }
