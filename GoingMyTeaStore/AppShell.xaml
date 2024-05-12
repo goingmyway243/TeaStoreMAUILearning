@@ -23,7 +23,7 @@
             <ShellContent ContentTemplate="{DataTemplate pages:CartPage}" />
         </Tab>
 
-        <Tab Title="Cart"
+        <Tab Title="Favorite"
              Icon="heart">
             <ShellContent ContentTemplate="{DataTemplate pages:FavoritePage}" />
         </Tab>

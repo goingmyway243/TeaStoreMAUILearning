@@ -40,6 +40,8 @@ public partial class CartPage : ContentPage
         }
 
         CvCart.ItemsSource = ShoppingCartItems;
+
+        UpdateTotalPrice();
     }
 
     private void UpdateTotalPrice()

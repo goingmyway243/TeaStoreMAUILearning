@@ -21,7 +21,7 @@ public partial class HomePage : ContentPage
     {
         var result = await ApiService.GetProducts("trending", string.Empty);
 
-        CvCategories.ItemsSource = result;
+        CvTrending.ItemsSource = result;
     }
 
     private async void GetBestSelling()

@@ -60,9 +60,15 @@ namespace GoingMyTeaStore.Services
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
-            var response = await httpClient.GetStringAsync(AppSettings.ApiUrl + "api/users/profileimage");
+            var response = await httpClient.GetAsync(AppSettings.ApiUrl + "api/users/profileimage");
 
-            return JsonConvert.DeserializeObject<ProfileImage>(response);
+            if (response.IsSuccessStatusCode)
+            {
+                var profileImage = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<ProfileImage>(profileImage);
+            }
+
+            return null;
         }
 
         public static async Task<bool> UploadUserImage(byte[] imageArray)
@@ -101,7 +107,7 @@ namespace GoingMyTeaStore.Services
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Preferences.Get("accesstoken", string.Empty));
 
-            var response = await httpClient.GetAsync(AppSettings.ApiUrl + $"api/products/productType={productType}&categoryId={categoryId}");
+            var response = await httpClient.GetAsync(AppSettings.ApiUrl + $"api/products?productType={productType}&categoryId={categoryId}");
 
             if (response.IsSuccessStatusCode)
             {

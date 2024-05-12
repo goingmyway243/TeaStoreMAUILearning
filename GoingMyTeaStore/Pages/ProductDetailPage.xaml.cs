@@ -32,8 +32,8 @@ public partial class ProductDetailPage : ContentPage
         {
             LblProductName.Text = result.Name;
             LblProductDescription.Text = result.Detail;
-            LblProductPrice.Text = result.Price.ToString("0:C0");
-            LblTotalPrice.Text = result.Price.ToString("0:C0");
+            LblProductPrice.Text = result.Price.ToString();
+            LblTotalPrice.Text = result.Price.ToString();
             ImgProduct.Source = result.FullPathImageUrl;
             _imageUrl = result.FullPathImageUrl;
         }
