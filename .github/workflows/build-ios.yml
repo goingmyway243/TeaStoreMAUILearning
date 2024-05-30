@@ -24,7 +24,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet publish -f net8.0-ios -c Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:CodesignKey="format('Apple Distribution{0} John Smith (AY2GDE9QM7)', ':')" -p:CodesignProvision="MyMauiApp"
+        run: dotnet publish -f net8.0-ios -c Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:CodesignKey=format('Apple Distribution{0} John Smith (AY2GDE9QM7)', ':') -p:CodesignProvision="MyMauiApp"
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
