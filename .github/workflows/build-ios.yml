@@ -11,10 +11,12 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v4
+      - name: Switch to Xcode 14.2
+        run: sudo xcode-select -s /Applications/Xcode_14.2.app
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -28,4 +30,5 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          path: ./**/*.ipa
+          name: ios-app
+          path: bin/Release/net7.0/ios/
